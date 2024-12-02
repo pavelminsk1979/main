@@ -1,12 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+export class MathController {
+  @MessagePattern({ cmd: 'sum1' })
+  async accumulate(data: number[]): Promise<number> {
+    console.log('data');
+    console.log(data);
+    console.log('data');
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+    return data.reduce((a, b) => a + b);
   }
 }
